@@ -1,0 +1,6 @@
+<h1>Twitter Public Timeline </h1>
+<% @users.each do |user| %>
+  <%= user.username %>
+  <%= user.text %>
+  <%= user.reply %>
+<% end %>
