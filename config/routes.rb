@@ -5,4 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   root "users#timeline"
+
+  get '/login', to: 'users#login'
+  get '/register', to: 'users#register', as: 'register_user'
 end

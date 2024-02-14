@@ -1,6 +1,146 @@
-<h1>Twitter Public Timeline </h1>
-<% @users.each do |user| %>
-  <%= user.username %>
-  <%= user.text %>
-  <%= user.reply %>
-<% end %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Twitter</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  
+  <%= csrf_meta_tags %>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #0eaae6;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .login-join {
+      font-size: 14px;
+    }
+
+    .login-join a {
+      color: white;
+      text-decoration: none;
+      padding: 2px 10px;
+      margin-left: 5px;
+      border: 1px solid white;
+      border-radius: 4px;
+    }
+
+    .tweets-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tweets-list {
+      width: 70%;
+      padding: 20px;
+    }
+
+    .sidebar {
+      width: 30%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .tweet {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .tweet img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .tweet .content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tweet .username {
+      color: #0eaae6;
+      font-weight: bold;
+    }
+
+    .sidebar .create-account {
+      background-color: #00aced;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+
+    .sidebar select {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      padding: 0;
+    }
+
+    .sidebar li {
+      list-style: none;
+      padding: 5px 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #00aced;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Twitter</h1>
+    <div class="login-join">
+      <%= link_to 'Login', login_path, class: 'login' %>
+      
+      <%= link_to 'Join Twitter', register_user_path, class: 'join' %>
+    </div>
+  </div>
+
+  <div class="tweets-container">
+    <div class="tweets-list">
+      <% @users.each do |user| %>
+        <div class="tweet">
+          <%= image_tag(user.profile_image, alt: "#{user.username}'s profile pic", class: 'profile-image') if user.profile_image.present? %>
+          <div class="content">
+            <strong><%= user.username %></strong>
+            <p><%= user.text %></p>
+            <%= '________________________________________________________________________' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="sidebar">
+      <div class="create-account">
+        <%= link_to 'Create Your Account', register_user_path, class: 'create-account-link' %>
+      </div>
+
+      <div class="language-select">
+        <%= select_tag "language", options_for_select([['Select Language...', ''], 'English', 'Español', 'Français']), class: 'language-dropdown' %>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
